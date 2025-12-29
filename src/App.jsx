@@ -1,12 +1,14 @@
 import { CheckCircle2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import './App.css';
 import GameView from './components/GameView';
 import Header from './components/Header';
 import LandingView from './components/LandingView';
+import ResultView from './components/ResultView';
 import ReviewView from './components/ReviewView';
+
 import { SEGMENTS } from './utils/config';
 
-// Progress Bar Component
 const ProgressBar = ({ gameState }) => {
   const steps = ['Start', 'Review', 'Spin', 'Prize'];
   const currentIdx = ['landing', 'review', 'game', 'result'].indexOf(gameState);
@@ -36,7 +38,6 @@ const ProgressBar = ({ gameState }) => {
   );
 };
 
-// Safe Confetti Component (Fixed: Uses lazy state initialization)
 const Confetti = () => {
   const [particles] = useState(() => {
     return Array.from({ length: 50 }).map((_, i) => ({
@@ -58,7 +59,7 @@ const Confetti = () => {
           className="absolute w-2 h-2 sm:w-3 sm:h-3 rounded-sm"
           style={{
             left: `${p.x}%`,
-            top: -20, // Start above screen
+            top: -20,
             backgroundColor: p.color,
             transform: `rotate(${p.rotation}deg)`,
             animation: `fall ${p.duration}s linear forwards`,
@@ -77,22 +78,15 @@ const Confetti = () => {
 
 
 
-
-// --- Main App Component ---
-
 export default function App() {
+  const timerRef = useRef(null);
+
   const [gameState, setGameState] = useState('landing');
-  
-  // Data State
   const [reviewText, setReviewText] = useState('');
   const [gameResult, setGameResult] = useState(null);
-  
-  // Animation State
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
-  
-  // Refs for cleanup and safety
-  const timerRef = useRef(null);
+
 
   useEffect(() => {
     return () => {
@@ -100,7 +94,6 @@ export default function App() {
     };
   }, []);
 
-  // --- Logic ---
 
   const handleStart = () => setGameState('review');
 
@@ -129,9 +122,6 @@ export default function App() {
 
     // 3. Set timer to calculate result after animation
     timerRef.current = setTimeout(() => {
-      // Logic to determine winner based on angle
-      // Note: SVG is rotated -90deg, pointer is at top (0 visual).
-      // Effective angle is (360 - (rotation % 360)) % 360
       const normalizedRotation = newRotation % 360;
       const effectiveAngle = (360 - normalizedRotation) % 360;
       
@@ -158,7 +148,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 flex flex-col overflow-hidden">
-      {/* Confetti Overlay */}
+      
       {gameState === 'result' && gameResult?.type === 'win' && <Confetti />}
 
       <Header />
@@ -179,7 +169,7 @@ export default function App() {
               />
             )}
             
-            {['game', 'result'].includes(gameState) && (
+            {gameState === 'game' && (
               <GameView 
                 rotation={rotation} 
                 isSpinning={isSpinning} 
@@ -187,21 +177,21 @@ export default function App() {
               />
             )}
             
-            {/* {gameState === 'result' && (
+            {gameState === 'result' && (
               <ResultView 
                 result={gameResult} 
                 onReset={handleReset} 
               />
-            )} */}
+            )}
           </div>
         </div>
       </main>
 
-      <footer className="p-6 text-center text-slate-400 text-xs">
-        &copy; 2025 ReviewRoulette Inc. • Developed by Niloy Kumar Das.
+      <footer className="p-6 text-center text-indigo-700 text-sm">
+        &copy; 2025 Review Roulette Inc. • Developed by Niloy Kumar Das • Website: <a href="http://www.imniloy.xyz" target="_blank" rel="noopener noreferrer">www.imniloy.xyz</a> 
       </footer>
 
-      <style>{`
+      {/* <style>{`
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
@@ -217,7 +207,7 @@ export default function App() {
         .animate-bounce-in {
           animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 }

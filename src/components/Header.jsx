@@ -7,10 +7,10 @@ const Header = () => (
         <div className="bg-indigo-600 p-1.5 rounded-lg">
           <Star className="text-white fill-current w-4 h-4" />
         </div>
-        <span className="font-bold text-lg tracking-tight text-slate-800">ReviewRoulette</span>
+        <span className="font-bold text-lg tracking-tight text-slate-800">Review Roulette</span>
       </div>
-      <div className="text-sm font-semibold px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full border border-indigo-100">
-        <a href="https://www.imniloy.xyz" target="_blank" rel="noopener noreferrer">
+      <div className="text-xs sm:text-sm lg:text-base font-semibold px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full border border-indigo-100">
+        <a href="https://www.imniloy.xyz" className="text-nowrap" target="_blank" rel="noopener noreferrer">
         Developed by imniloy.xyz</a>
       </div>
     </div>

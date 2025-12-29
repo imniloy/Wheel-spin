@@ -11,8 +11,8 @@ const ResultView = ({ result, onReset }) => (
           </div>
         </>
       ) : (
-        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
-          <Frown className="w-20 h-20 text-slate-400" />
+        <div className="p-6 bg-red-50 rounded-3xl border border-slate-100">
+          <Frown className="w-20 h-20 text-red-400" />
         </div>
       )}
     </div>
