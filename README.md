@@ -109,6 +109,7 @@ All rights reserved.
 **Developed by:**  
 👨‍💻 **Niloy Kumar Das**  
 🌐 Website: https://www.imniloy.xyz
+📧 Email: imniloy08@gmail.com
 
 ---
 
